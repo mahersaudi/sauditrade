@@ -5,11 +5,10 @@ Django settings for saudi_exports_project project.
 from pathlib import Path
 import os
 import dj_database_url
-from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ── Security ────────────────────────────────────────────────────────────────
+# ── Security ──────────────────────────────────────────────────────────────────
 SECRET_KEY = os.environ.get(
     'SECRET_KEY',
     'django-insecure-^2$whc$ckq%_(tc#aux@9xi5krfpwevq@aq#(m^q(9d=q@+@g%'
@@ -23,7 +22,7 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# ── Apps ─────────────────────────────────────────────────────────────────────
+# ── Apps ──────────────────────────────────────────────────────────────────────
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -67,7 +66,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'saudi_exports_project.wsgi.application'
 
-# ── Database ─────────────────────────────────────────────────────────────────
+# ── Database ──────────────────────────────────────────────────────────────────
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
 if DATABASE_URL:
@@ -99,24 +98,30 @@ TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_TZ = True
 
+# Plain strings (no gettext_lazy in settings to avoid import-time errors)
 LANGUAGES = [
-    ('ar', _('Arabic')),
-    ('en', _('English')),
+    ('ar', 'العربية'),
+    ('en', 'English'),
 ]
 
 LOCALE_PATHS = [BASE_DIR / 'locale']
 
 # ── Static & Media Files ──────────────────────────────────────────────────────
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Only add STATICFILES_DIRS if the 'static' source folder exists
+_STATIC_SRC = BASE_DIR / 'static'
+if _STATIC_SRC.exists():
+    STATICFILES_DIRS = [_STATIC_SRC]
+
+# CompressedStaticFilesStorage: compresses files, no manifest needed at startup
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
@@ -125,13 +130,12 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ── Production Security (only when not DEBUG) ─────────────────────────────────
+# ── Production Security ───────────────────────────────────────────────────────
 if not DEBUG:
+    # Let Render's proxy handle SSL — do NOT set SECURE_SSL_REDIRECT=True
+    # (it causes infinite redirect loops with Render's health checks)
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_SECONDS = 3600
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-
