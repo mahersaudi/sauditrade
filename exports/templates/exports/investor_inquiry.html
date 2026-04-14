@@ -1,0 +1,193 @@
+{% extends 'exports/base.html' %}
+{% load static %}
+
+{% block title %}{% if IS_AR %}استفسار مستثمر{% else %}Investor Inquiry{% endif %} | Saudi Export{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<div class="page-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1>
+                    <i class="fas fa-search-dollar me-3"></i>
+                    {% if IS_AR %}ابحث عن ما تحتاجه{% else %}Find What You Need{% endif %}
+                </h1>
+                <p style="opacity:0.85; font-size:16px;">
+                    {% if IS_AR %}
+                    أرسل استفساراً وسيربطك فريقنا بالمصنع السعودي المناسب
+                    {% else %}
+                    Send an inquiry and our team will connect you with the right Saudi factory
+                    {% endif %}
+                </p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">{% if IS_AR %}الرئيسية{% else %}Home{% endif %}</a></li>
+                        <li class="breadcrumb-item active">{% if IS_AR %}استفسار مستثمر{% else %}Investor Inquiry{% endif %}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div style="background:rgba(255,255,255,0.1); border-radius:16px; padding:20px; display:inline-block; text-align:center; border:1px solid rgba(255,255,255,0.15);">
+                    <i class="fas fa-globe" style="font-size:40px; color:var(--gold-light); margin-bottom:10px; display:block;"></i>
+                    <div style="font-size:13px; opacity:0.85;">{% if IS_AR %}40+ دولة{% else %}40+ Countries{% endif %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Form Section -->
+<section class="form-section">
+    <div class="container">
+        <div class="row justify-content-center g-4">
+
+            <!-- Info Sidebar -->
+            <div class="col-lg-4 order-lg-2">
+                <div class="p-4 rounded-4" style="background:white; box-shadow:var(--shadow); border:1px solid var(--border-color);">
+                    <h5 class="fw-bold mb-4" style="color:var(--green-dark); border-bottom:2px solid var(--gold); padding-bottom:12px;">
+                        <i class="fas fa-star me-2" style="color:var(--gold)"></i>
+                        {% if IS_AR %}لماذا المملكة؟{% else %}Why Saudi Arabia?{% endif %}
+                    </h5>
+                    <div class="d-flex flex-column gap-3 mb-4">
+                        <div class="d-flex gap-3 align-items-start">
+                            <div style="width:40px; height:40px; background:linear-gradient(135deg,var(--green-dark),var(--green-mid)); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;">
+                                <i class="fas fa-oil-can"></i>
+                            </div>
+                            <div>
+                                <strong style="font-size:14px;">{% if IS_AR %}بتروكيماويات عالمية{% else %}World-class Petrochemicals{% endif %}</strong>
+                                <p class="small text-muted mb-0">{% if IS_AR %}من أكبر منتجي البتروكيماويات في العالم{% else %}One of the world's largest petrochemical producers{% endif %}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-3 align-items-start">
+                            <div style="width:40px; height:40px; background:linear-gradient(135deg,var(--green-dark),var(--green-mid)); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div>
+                                <strong style="font-size:14px;">{% if IS_AR %}تمور ومنتجات زراعية{% else %}Dates & Agricultural Products{% endif %}</strong>
+                                <p class="small text-muted mb-0">{% if IS_AR %}أجود أنواع التمور في العالم{% else %}World's finest quality dates{% endif %}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-3 align-items-start">
+                            <div style="width:40px; height:40px; background:linear-gradient(135deg,var(--green-dark),var(--green-mid)); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div>
+                                <strong style="font-size:14px;">{% if IS_AR %}تصنيع متطور{% else %}Advanced Manufacturing{% endif %}</strong>
+                                <p class="small text-muted mb-0">{% if IS_AR %}بنية تحتية صناعية متقدمة{% else %}Advanced industrial infrastructure{% endif %}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-3 align-items-start">
+                            <div style="width:40px; height:40px; background:linear-gradient(135deg,var(--gold-dark),var(--gold)); border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div>
+                                <strong style="font-size:14px;">{% if IS_AR %}منتجات معتمدة دولياً{% else %}Internationally Certified Products{% endif %}</strong>
+                                <p class="small text-muted mb-0">{% if IS_AR %}مطابقة للمعايير الدولية{% else %}Compliant with international standards{% endif %}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-3 rounded-3" style="background:rgba(0,108,53,0.06); border:1px solid rgba(0,108,53,0.15);">
+                        <p class="small mb-2 fw-bold" style="color:var(--green-dark);">
+                            <i class="fas fa-clock me-1"></i>
+                            {% if IS_AR %}وقت الاستجابة{% else %}Response Time{% endif %}
+                        </p>
+                        <p class="small mb-0 text-muted">
+                            {% if IS_AR %}يتواصل معك فريقنا خلال 24-48 ساعة عمل{% else %}Our team will contact you within 24-48 business hours{% endif %}
+                        </p>
+                    </div>
+
+                    <!-- Browse Products -->
+                    <div class="mt-4 text-center">
+                        <p class="small text-muted mb-2">{% if IS_AR %}أو تصفح قائمة المنتجات المتاحة{% else %}Or browse available products{% endif %}</p>
+                        <a href="{% url 'product_list' %}" class="btn-green text-decoration-none" style="padding:10px 20px; border-radius:10px; display:inline-block; font-size:13px;">
+                            <i class="fas fa-boxes me-1"></i>
+                            {% if IS_AR %}تصفح المنتجات{% else %}Browse Products{% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Form -->
+            <div class="col-lg-8 order-lg-1">
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <h2>
+                            <i class="fas fa-envelope-open-text me-2"></i>
+                            {% if IS_AR %}نموذج استفسار المستثمر{% else %}Investor Inquiry Form{% endif %}
+                        </h2>
+                        <p>{% if IS_AR %}* الحقول المطلوبة إلزامية{% else %}* Required fields are mandatory{% endif %}</p>
+                    </div>
+                    <div class="form-card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <!-- Name & Company -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.name.label }}</label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}<div class="text-danger small mt-1">{{ form.name.errors.as_text }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.company.label }}</label>
+                                    {{ form.company }}
+                                </div>
+                            </div>
+
+                            <!-- Country & Email -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.country.label }}</label>
+                                    {{ form.country }}
+                                    {% if form.country.errors %}<div class="text-danger small mt-1">{{ form.country.errors.as_text }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.email.label }}</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors.as_text }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Phone & Product Interest -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.phone.label }}</label>
+                                    {{ form.phone }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.product_interest.label }}</label>
+                                    {{ form.product_interest }}
+                                    {% if form.product_interest.errors %}<div class="text-danger small mt-1">{{ form.product_interest.errors.as_text }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Quantity -->
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.quantity_needed.label }}</label>
+                                {{ form.quantity_needed }}
+                            </div>
+
+                            <!-- Message -->
+                            <div class="mb-4">
+                                <label class="form-label">{{ form.message.label }}</label>
+                                {{ form.message }}
+                                {% if form.message.errors %}<div class="text-danger small mt-1">{{ form.message.errors.as_text }}</div>{% endif %}
+                            </div>
+
+                            <button type="submit" class="btn-green w-100 py-3" style="font-size:16px; border-radius:12px;">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                {% if IS_AR %}إرسال الاستفسار{% else %}Send Inquiry{% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

@@ -1,0 +1,240 @@
+{% extends 'exports/base.html' %}
+{% load static %}
+
+{% block title %}{% if IS_AR %}طلب عرض مصنعك{% else %}List Your Factory{% endif %} | Saudi Export{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<div class="page-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1>
+                    <i class="fas fa-industry me-3"></i>
+                    {% if IS_AR %}اعرض مصنعك للعالم{% else %}List Your Factory to the World{% endif %}
+                </h1>
+                <p class="mb-2" style="opacity:0.85; font-size:16px;">
+                    {% if IS_AR %}
+                    أرسل طلبك الآن وسيتواصل معك فريق المجلس خلال 3-5 أيام عمل
+                    {% else %}
+                    Submit your request now and the council team will contact you within 3-5 business days
+                    {% endif %}
+                </p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">{% if IS_AR %}الرئيسية{% else %}Home{% endif %}</a></li>
+                        <li class="breadcrumb-item active">{% if IS_AR %}اعرض مصنعك{% else %}List Your Factory{% endif %}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div style="background:rgba(255,255,255,0.1); border-radius:16px; padding:20px; display:inline-block; text-align:center; border:1px solid rgba(255,255,255,0.15);">
+                    <i class="fas fa-handshake" style="font-size:40px; color:var(--gold-light); margin-bottom:10px; display:block;"></i>
+                    <div style="font-size:13px; opacity:0.85;">{% if IS_AR %}شريكك في التصدير{% else %}Your Export Partner{% endif %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Benefits Bar -->
+<div style="background:var(--gold); padding:14px 0;">
+    <div class="container">
+        <div class="row text-center g-3">
+            <div class="col-md-3 col-6">
+                <div style="color:white; font-size:13px; font-weight:600;">
+                    <i class="fas fa-check-circle me-1"></i>
+                    {% if IS_AR %}مراجعة مجانية{% else %}Free Review{% endif %}
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div style="color:white; font-size:13px; font-weight:600;">
+                    <i class="fas fa-globe me-1"></i>
+                    {% if IS_AR %}وصول عالمي{% else %}Global Reach{% endif %}
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div style="color:white; font-size:13px; font-weight:600;">
+                    <i class="fas fa-shield-alt me-1"></i>
+                    {% if IS_AR %}موثوقية عالية{% else %}High Credibility{% endif %}
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div style="color:white; font-size:13px; font-weight:600;">
+                    <i class="fas fa-headset me-1"></i>
+                    {% if IS_AR %}دعم متواصل{% else %}Continuous Support{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Form Section -->
+<section class="form-section">
+    <div class="container">
+        <div class="row justify-content-center g-4">
+
+            <!-- Info Sidebar -->
+            <div class="col-lg-4 col-md-12 order-lg-2">
+                <div class="p-4 rounded-4 h-100" style="background:white; box-shadow:var(--shadow); border:1px solid var(--border-color);">
+                    <h5 class="fw-bold mb-4" style="color:var(--green-dark); border-bottom:2px solid var(--gold); padding-bottom:12px;">
+                        <i class="fas fa-info-circle me-2"></i>
+                        {% if IS_AR %}لماذا تنضم إلينا؟{% else %}Why Join Us?{% endif %}
+                    </h5>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="value-card">
+                            <div class="value-icon"><i class="fas fa-globe-asia"></i></div>
+                            <div>
+                                <h5>{% if IS_AR %}وصول دولي{% else %}International Reach{% endif %}</h5>
+                                <p>{% if IS_AR %}اصل لمستثمرين في أكثر من 40 دولة حول العالم{% else %}Reach investors in over 40 countries worldwide{% endif %}</p>
+                            </div>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon"><i class="fas fa-chart-line"></i></div>
+                            <div>
+                                <h5>{% if IS_AR %}نمو تصديري{% else %}Export Growth{% endif %}</h5>
+                                <p>{% if IS_AR %}ضاعف مبيعاتك من خلال قنوات التصدير الدولية{% else %}Multiply your sales through international export channels{% endif %}</p>
+                            </div>
+                        </div>
+                        <div class="value-card">
+                            <div class="value-icon"><i class="fas fa-handshake"></i></div>
+                            <div>
+                                <h5>{% if IS_AR %}وساطة موثوقة{% else %}Trusted Mediation{% endif %}</h5>
+                                <p>{% if IS_AR %}فريق متخصص يتولى التواصل مع المستثمرين نيابةً عنك{% else %}A specialized team handles investor communication on your behalf{% endif %}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Steps -->
+                    <div class="mt-4 p-3 rounded-3" style="background:rgba(0,108,53,0.05); border:1px solid rgba(0,108,53,0.1);">
+                        <h6 class="fw-bold mb-3" style="color:var(--green-dark)">
+                            {% if IS_AR %}خطوات التسجيل{% else %}Registration Steps{% endif %}
+                        </h6>
+                        <div class="d-flex flex-column gap-2" style="font-size:13px;">
+                            <div class="d-flex gap-2 align-items-center">
+                                <span class="badge rounded-circle" style="background:var(--green-dark); width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:11px;">1</span>
+                                <span>{% if IS_AR %}أرسل النموذج{% else %}Submit the form{% endif %}</span>
+                            </div>
+                            <div class="d-flex gap-2 align-items-center">
+                                <span class="badge rounded-circle" style="background:var(--green-dark); width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:11px;">2</span>
+                                <span>{% if IS_AR %}المراجعة والتحقق (3-5 أيام){% else %}Review & verification (3-5 days){% endif %}</span>
+                            </div>
+                            <div class="d-flex gap-2 align-items-center">
+                                <span class="badge rounded-circle" style="background:var(--green-dark); width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:11px;">3</span>
+                                <span>{% if IS_AR %}إدراج المنتجات في المنصة{% else %}Products listed on the platform{% endif %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Form -->
+            <div class="col-lg-8 col-md-12 order-lg-1">
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <h2>
+                            <i class="fas fa-file-alt me-2"></i>
+                            {% if IS_AR %}نموذج طلب عرض المصنع{% else %}Factory Listing Request Form{% endif %}
+                        </h2>
+                        <p>{% if IS_AR %}* الحقول المطلوبة إلزامية{% else %}* Required fields are mandatory{% endif %}</p>
+                    </div>
+                    <div class="form-card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <!-- Factory Name -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.factory_name_ar.label }}</label>
+                                    {{ form.factory_name_ar }}
+                                    {% if form.factory_name_ar.errors %}<div class="text-danger small mt-1">{{ form.factory_name_ar.errors.as_text }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.factory_name_en.label }}</label>
+                                    {{ form.factory_name_en }}
+                                </div>
+                            </div>
+
+                            <!-- Owner & City -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.owner_name.label }}</label>
+                                    {{ form.owner_name }}
+                                    {% if form.owner_name.errors %}<div class="text-danger small mt-1">{{ form.owner_name.errors.as_text }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.city.label }}</label>
+                                    {{ form.city }}
+                                    {% if form.city.errors %}<div class="text-danger small mt-1">{{ form.city.errors.as_text }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Contact -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.email.label }}</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors.as_text }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.phone.label }}</label>
+                                    {{ form.phone }}
+                                    {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors.as_text }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Commercial & Website -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.commercial_register.label }}</label>
+                                    {{ form.commercial_register }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ form.website.label }}</label>
+                                    {{ form.website }}
+                                </div>
+                            </div>
+
+                            <!-- Products Description -->
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.products_description_ar.label }}</label>
+                                {{ form.products_description_ar }}
+                                {% if form.products_description_ar.errors %}<div class="text-danger small mt-1">{{ form.products_description_ar.errors.as_text }}</div>{% endif %}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">{{ form.products_description_en.label }}</label>
+                                {{ form.products_description_en }}
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="mb-4">
+                                <label class="form-label">{{ form.additional_notes.label }}</label>
+                                {{ form.additional_notes }}
+                            </div>
+
+                            <div class="p-3 rounded-3 mb-4" style="background:rgba(0,108,53,0.06); border:1px solid rgba(0,108,53,0.15);">
+                                <p class="mb-0 small" style="color:var(--green-dark);">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    {% if IS_AR %}
+                                    بإرسال هذا النموذج، أنت توافق على أن المعلومات المقدمة صحيحة، وسيتم التواصل معك للتحقق والمراجعة.
+                                    {% else %}
+                                    By submitting this form, you confirm that the provided information is accurate. We will contact you for verification and review.
+                                    {% endif %}
+                                </p>
+                            </div>
+
+                            <button type="submit" class="btn-green w-100 py-3" style="font-size:16px; border-radius:12px;">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                {% if IS_AR %}إرسال الطلب{% else %}Submit Request{% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

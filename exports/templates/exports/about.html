@@ -1,0 +1,194 @@
+{% extends 'exports/base.html' %}
+{% load static %}
+
+{% block title %}{% if IS_AR %}عن المجلس{% else %}About Us{% endif %} | Saudi Export{% endblock %}
+
+{% block content %}
+
+<!-- About Hero -->
+<section class="about-hero">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="hero-badge"><i class="fas fa-award"></i>{% if IS_AR %}منذ عام 2020{% else %}Since 2020{% endif %}</span>
+                <h1 class="hero-title">
+                    {% if IS_AR %}
+                        عن مجلس الصادرات
+                        <span>والتجارة السعودية</span>
+                    {% else %}
+                        About Saudi Export
+                        <span>& Trade Council</span>
+                    {% endif %}
+                </h1>
+                <p class="hero-desc">
+                    {% if IS_AR %}
+                    مجلس الصادرات والتجارة السعودية هو منصة وسيطة متخصصة تهدف إلى ربط المصانع السعودية الرائدة بالمستثمرين والمستوردين الأجانب حول العالم، بما يخدم أهداف رؤية المملكة 2030 في تنويع مصادر الدخل وتعزيز الصادرات غير النفطية.
+                    {% else %}
+                    The Saudi Export & Trade Council is a specialized intermediary platform aimed at connecting leading Saudi factories with foreign investors and importers worldwide, serving Saudi Vision 2030 objectives of diversifying revenue sources and boosting non-oil exports.
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-img">
+                    <img src="{% static 'exports/img/marc-olivier-jodoin-NqOInJ-ttqM-unsplash.jpg' %}" alt="About">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Vision 2030 -->
+<section class="py-5" style="background:var(--light-bg);">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="about-img">
+                    <img src="{% static 'exports/img/robson-hatsukami-morgan-NKr0qBAkU4s-unsplash.jpg' %}" alt="Vision 2030">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <span class="section-tag">{% if IS_AR %}رؤية 2030{% else %}Vision 2030{% endif %}</span>
+                <h2 class="section-title">
+                    {% if IS_AR %}نسعى لتحقيق <span>رؤية المملكة</span>{% else %}Serving Saudi <span>Vision 2030</span>{% endif %}
+                </h2>
+                <div class="title-line"></div>
+                <p class="text-muted" style="line-height:1.8;">
+                    {% if IS_AR %}
+                    في إطار رؤية المملكة العربية السعودية 2030، نسعى إلى تعزيز الصادرات غير النفطية وفتح أسواق جديدة للمنتجات السعودية في الأسواق الدولية. نعمل على تمكين المصانع السعودية من الوصول إلى المستثمرين الأجانب بسهولة وكفاءة.
+                    {% else %}
+                    Within Saudi Vision 2030, we strive to boost non-oil exports and open new markets for Saudi products in international markets. We work to enable Saudi factories to easily and efficiently reach foreign investors.
+                    {% endif %}
+                </p>
+                <div class="row g-3 mt-2">
+                    <div class="col-6">
+                        <div class="p-3 rounded-3 text-center" style="background:white; border:1px solid var(--border-color);">
+                            <div style="font-size:2rem; font-weight:900; color:var(--green-dark);">%50</div>
+                            <div class="small text-muted">{% if IS_AR %}زيادة الصادرات{% else %}Export Increase Target{% endif %}</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded-3 text-center" style="background:white; border:1px solid var(--border-color);">
+                            <div style="font-size:2rem; font-weight:900; color:var(--gold-dark);">40+</div>
+                            <div class="small text-muted">{% if IS_AR %}دولة مستهدفة{% else %}Target Countries{% endif %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag">{% if IS_AR %}قيمنا{% else %}Our Values{% endif %}</span>
+            <h2 class="section-title">
+                {% if IS_AR %}ما <span>يميزنا</span>{% else %}What <span>Sets Us Apart</span>{% endif %}
+            </h2>
+            <div class="title-line mx-auto"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-handshake"></i></div>
+                    <div>
+                        <h5>{% if IS_AR %}الوساطة الموثوقة{% else %}Trusted Mediation{% endif %}</h5>
+                        <p>{% if IS_AR %}نعمل كوسيط محايد وموثوق بين المصانع السعودية والمستثمرين الأجانب لضمان أفضل النتائج{% else %}We act as a neutral and trusted intermediary between Saudi factories and foreign investors to ensure the best outcomes{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div>
+                        <h5>{% if IS_AR %}الجودة والمعايير{% else %}Quality & Standards{% endif %}</h5>
+                        <p>{% if IS_AR %}نتحقق من جميع المصانع المدرجة للتأكد من مطابقتها للمعايير الدولية{% else %}We verify all listed factories to ensure they meet international standards{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-globe-asia"></i></div>
+                    <div>
+                        <h5>{% if IS_AR %}الانفتاح العالمي{% else %}Global Openness{% endif %}</h5>
+                        <p>{% if IS_AR %}نسعى للوصول إلى أسواق جديدة وتوسيع نطاق الصادرات السعودية حول العالم{% else %}We seek to reach new markets and expand Saudi exports reach worldwide{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-bolt"></i></div>
+                    <div>
+                        <h5>{% if IS_AR %}الكفاءة والسرعة{% else %}Efficiency & Speed{% endif %}</h5>
+                        <p>{% if IS_AR %}نضمن معالجة الطلبات والاستفسارات بسرعة وكفاءة عالية{% else %}We ensure fast and highly efficient processing of requests and inquiries{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card">
+                    <div class="value-icon" style="background:linear-gradient(135deg,var(--gold-dark),var(--gold));"><i class="fas fa-language"></i></div>
+                    <div>
+                        <h5>{% if IS_AR %}ثنائية اللغة{% else %}Bilingual Platform{% endif %}</h5>
+                        <p>{% if IS_AR %}منصة بالعربية والإنجليزية لتسهيل التواصل مع المستثمرين الدوليين{% else %}Platform in Arabic and English to facilitate communication with international investors{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="value-card">
+                    <div class="value-icon" style="background:linear-gradient(135deg,var(--gold-dark),var(--gold));"><i class="fas fa-headset"></i></div>
+                    <div>
+                        <h5>{% if IS_AR %}دعم متواصل{% else %}Continuous Support{% endif %}</h5>
+                        <p>{% if IS_AR %}فريق متخصص لدعمك في كل مراحل عملية التصدير والاستيراد{% else %}A specialized team to support you at all stages of the export and import process{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Section -->
+<section class="py-5" style="background:var(--light-bg);">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <img src="{% static 'exports/img/esten-erbol-15JWmPetYeg-unsplash.jpg' %}" alt="" class="img-fluid rounded-4 shadow w-100" style="height:250px; object-fit:cover;">
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'exports/img/maksym-kaharlytskyi-kDVaFjoQf4M-unsplash.jpg' %}" alt="" class="img-fluid rounded-4 shadow w-100" style="height:250px; object-fit:cover;">
+            </div>
+            <div class="col-md-4">
+                <img src="{% static 'exports/img/bent-van-aeken-0A7YwYhZhWw-unsplash.jpg' %}" alt="" class="img-fluid rounded-4 shadow w-100" style="height:250px; object-fit:cover;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-7">
+                <h2 class="section-title" style="color:white;">
+                    {% if IS_AR %}ابدأ رحلتك <span style="color:var(--gold-light)">التجارية اليوم</span>{% else %}Start Your <span style="color:var(--gold-light)">Trade Journey Today</span>{% endif %}
+                </h2>
+                <p style="color:rgba(255,255,255,0.8); font-size:16px; margin-bottom:30px;">
+                    {% if IS_AR %}سواء كنت مستثمراً أجنبياً أو صاحب مصنع، نحن هنا لمساعدتك{% else %}Whether you're a foreign investor or factory owner, we're here to help{% endif %}
+                </p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center">
+                    <a href="{% url 'investor_inquiry' %}" class="btn-hero-primary" style="background:linear-gradient(135deg,var(--gold),var(--gold-dark)); color:white; padding:14px 30px; border-radius:10px; text-decoration:none; font-weight:700;">
+                        <i class="fas fa-search-dollar me-2"></i>
+                        {% if IS_AR %}أنا مستثمر{% else %}I'm an Investor{% endif %}
+                    </a>
+                    <a href="{% url 'factory_request' %}" class="btn-hero-secondary" style="background:rgba(255,255,255,0.1); color:white; padding:14px 30px; border-radius:10px; text-decoration:none; font-weight:600; border:2px solid rgba(255,255,255,0.3);">
+                        <i class="fas fa-industry me-2"></i>
+                        {% if IS_AR %}أنا صاحب مصنع{% else %}I'm a Factory Owner{% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

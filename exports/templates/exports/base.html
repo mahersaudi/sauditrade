@@ -1,0 +1,263 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANG|default:'ar' }}" dir="{% if IS_RTL %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% if IS_AR %}مجلس الصادرات والتجارة السعودية{% else %}Saudi Export & Trade Council{% endif %}{% endblock %}</title>
+    <meta name="description" content="{% if IS_AR %}منصة الصادرات السعودية - الوسيط الأمثل بين المصانع السعودية والمستثمرين الأجانب{% else %}Saudi Exports Platform - The ideal intermediary between Saudi factories and foreign investors{% endif %}">
+
+    <!-- Bootstrap 5 RTL/LTR -->
+    {% if IS_RTL %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    {% else %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% endif %}
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'exports/css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% if IS_RTL %}rtl-body{% else %}ltr-body{% endif %}">
+
+<!-- Top Bar -->
+<div class="top-bar">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-sm-12">
+                <div class="top-bar-info">
+                    <span><i class="fas fa-envelope me-1"></i> info@saudiexports.sa</span>
+                    <span class="ms-3"><i class="fas fa-phone me-1"></i> +966 11 XXX XXXX</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 text-end">
+                <!-- Language Switcher -->
+                <form action="{% url 'set_language' %}" method="post" class="d-inline lang-form">
+                    {% csrf_token %}
+                    {% if IS_AR %}
+                    <input name="next" type="hidden" value="{{ request.path }}">
+                    <input name="language" type="hidden" value="en">
+                    <button type="submit" class="lang-btn">
+                        <img src="{% static 'exports/img/uk-flag.svg' %}" alt="EN" width="18" onerror="this.style.display='none'">
+                        <span>English</span>
+                    </button>
+                    {% else %}
+                    <input name="next" type="hidden" value="{{ request.path }}">
+                    <input name="language" type="hidden" value="ar">
+                    <button type="submit" class="lang-btn">
+                        <img src="{% static 'exports/img/sa-flag.svg' %}" alt="AR" width="18" onerror="this.style.display='none'">
+                        <span>العربية</span>
+                    </button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg main-navbar sticky-top">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-globe-asia"></i>
+                </div>
+                <div class="logo-text">
+                    {% if IS_AR %}
+                    <span class="logo-main">مجلس الصادرات</span>
+                    <span class="logo-sub">والتجارة السعودية</span>
+                    {% else %}
+                    <span class="logo-main">Saudi Export</span>
+                    <span class="logo-sub">& Trade Council</span>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav mx-auto gap-1">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
+                        <i class="fas fa-home me-1"></i>
+                        {% if IS_AR %}الرئيسية{% else %}Home{% endif %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'product' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'product_list' %}">
+                        <i class="fas fa-boxes me-1"></i>
+                        {% if IS_AR %}الصادرات{% else %}Exports{% endif %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'factories_list' %}active{% endif %}" href="{% url 'factories_list' %}">
+                        <i class="fas fa-industry me-1"></i>
+                        {% if IS_AR %}المصانع{% else %}Factories{% endif %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">
+                        <i class="fas fa-info-circle me-1"></i>
+                        {% if IS_AR %}عن المجلس{% else %}About{% endif %}
+                    </a>
+                </li>
+            </ul>
+            <div class="navbar-actions d-flex gap-2 align-items-center">
+                <a href="{% url 'investor_inquiry' %}" class="btn btn-outline-gold">
+                    <i class="fas fa-search-dollar me-1"></i>
+                    {% if IS_AR %}طلب مستثمر{% else %}Investor Inquiry{% endif %}
+                </a>
+                <a href="{% url 'factory_request' %}" class="btn btn-gold">
+                    <i class="fas fa-plus-circle me-1"></i>
+                    {% if IS_AR %}اعرض مصنعك{% else %}List Your Factory{% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Messages -->
+{% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+        <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} me-2"></i>
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Main Content -->
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="main-footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand">
+                        <div class="logo-container mb-3">
+                            <div class="logo-icon">
+                                <i class="fas fa-globe-asia"></i>
+                            </div>
+                            <div class="logo-text">
+                                {% if IS_AR %}
+                                <span class="logo-main text-white">مجلس الصادرات</span>
+                                <span class="logo-sub text-gold">والتجارة السعودية</span>
+                                {% else %}
+                                <span class="logo-main text-white">Saudi Export</span>
+                                <span class="logo-sub text-gold">& Trade Council</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="footer-desc">
+                            {% if IS_AR %}
+                            منصة متخصصة تربط المصانع السعودية بالمستثمرين الأجانب، ونسعى لتعزيز الصادرات السعودية وفتح آفاق جديدة للتجارة الدولية.
+                            {% else %}
+                            A specialized platform connecting Saudi factories with foreign investors, aiming to boost Saudi exports and open new horizons for international trade.
+                            {% endif %}
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title">
+                        {% if IS_AR %}روابط سريعة{% else %}Quick Links{% endif %}
+                    </h5>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'home' %}">{% if IS_AR %}الرئيسية{% else %}Home{% endif %}</a></li>
+                        <li><a href="{% url 'product_list' %}">{% if IS_AR %}الصادرات{% else %}Exports{% endif %}</a></li>
+                        <li><a href="{% url 'factories_list' %}">{% if IS_AR %}المصانع{% else %}Factories{% endif %}</a></li>
+                        <li><a href="{% url 'about' %}">{% if IS_AR %}عن المجلس{% else %}About Us{% endif %}</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">
+                        {% if IS_AR %}خدماتنا{% else %}Our Services{% endif %}
+                    </h5>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'factory_request' %}">{% if IS_AR %}اعرض مصنعك{% else %}List Your Factory{% endif %}</a></li>
+                        <li><a href="{% url 'investor_inquiry' %}">{% if IS_AR %}استفسار مستثمر{% else %}Investor Inquiry{% endif %}</a></li>
+                        <li><a href="{% url 'product_list' %}">{% if IS_AR %}تصفح المنتجات{% else %}Browse Products{% endif %}</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">
+                        {% if IS_AR %}تواصل معنا{% else %}Contact Us{% endif %}
+                    </h5>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            {% if IS_AR %}الرياض، المملكة العربية السعودية{% else %}Riyadh, Saudi Arabia{% endif %}
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            +966 11 XXX XXXX
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            info@saudiexports.sa
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            {% if IS_AR %}الأحد - الخميس: 8ص - 5م{% else %}Sun - Thu: 8AM - 5PM{% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">
+                        &copy; 2025 {% if IS_AR %}مجلس الصادرات والتجارة السعودية{% else %}Saudi Export & Trade Council{% endif %}.
+                        {% if IS_AR %}جميع الحقوق محفوظة.{% else %}All rights reserved.{% endif %}
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="footer-badges">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/320px-Flag_of_Saudi_Arabia.svg.png" alt="KSA" height="20" style="border-radius:3px;">
+                        <span class="ms-2">{% if IS_AR %}المملكة العربية السعودية{% else %}Kingdom of Saudi Arabia{% endif %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="{% static 'exports/js/main.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>
+

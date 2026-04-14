@@ -1,0 +1,188 @@
+{% extends 'exports/base.html' %}
+{% load static %}
+
+{% block title %}{% if IS_AR %}الصادرات والمنتجات{% else %}Exports & Products{% endif %} | Saudi Export{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<div class="page-hero">
+    <div class="container">
+        <h1>{% if IS_AR %}الصادرات السعودية{% else %}Saudi Exports{% endif %}</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">{% if IS_AR %}الرئيسية{% else %}Home{% endif %}</a></li>
+                <li class="breadcrumb-item active">{% if IS_AR %}الصادرات{% else %}Exports{% endif %}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Search Bar -->
+<div class="search-section py-4">
+    <div class="container">
+        <form action="{% url 'product_list' %}" method="GET" id="searchForm">
+            <div class="search-box">
+                <i class="fas fa-search ms-3 text-muted"></i>
+                <input type="text" name="q" value="{{ query }}" placeholder="{% if IS_AR %}ابحث عن منتج...{% else %}Search for a product...{% endif %}" autocomplete="off">
+                {% if selected_category %}
+                <input type="hidden" name="category" value="{{ selected_category.slug }}">
+                {% endif %}
+                <button type="submit">
+                    <i class="fas fa-search"></i>
+                    {% if IS_AR %}بحث{% else %}Search{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Main Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Sidebar Filter -->
+            <div class="col-lg-3 col-md-4">
+                <div class="filter-sidebar">
+                    <div class="filter-header">
+                        <i class="fas fa-filter"></i>
+                        {% if IS_AR %}تصفية حسب القطاع{% else %}Filter by Sector{% endif %}
+                    </div>
+                    <div class="filter-body">
+                        <a href="{% url 'product_list' %}{% if query %}?q={{ query }}{% endif %}"
+                           class="filter-item {% if not selected_category %}active{% endif %}">
+                            <span>
+                                <i class="fas fa-th-large me-2"></i>
+                                {% if IS_AR %}الكل{% else %}All{% endif %}
+                            </span>
+                            <span class="fi-count">{{ products.count }}</span>
+                        </a>
+                        {% for cat in categories %}
+                        <a href="{% url 'product_list' %}?category={{ cat.slug }}{% if query %}&q={{ query }}{% endif %}"
+                           class="filter-item {% if selected_category.slug == cat.slug %}active{% endif %}">
+                            <span>
+                                <i class="{{ cat.icon }} me-2"></i>
+                                {% if IS_AR %}{{ cat.name_ar }}{% else %}{{ cat.name_en }}{% endif %}
+                            </span>
+                            <span class="fi-count">{{ cat.products.count }}</span>
+                        </a>
+                        {% empty %}
+                        <p class="text-muted small text-center py-3">{% if IS_AR %}لا توجد تصنيفات{% else %}No categories{% endif %}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- CTA Box -->
+                <div class="mt-4 p-4 rounded-4 text-center" style="background:linear-gradient(135deg,var(--green-dark),var(--green-mid)); color:white;">
+                    <i class="fas fa-industry fs-1 mb-3 d-block" style="opacity:0.85"></i>
+                    <h6 class="fw-bold">{% if IS_AR %}هل لديك مصنع؟{% else %}Own a Factory?{% endif %}</h6>
+                    <p class="small mb-3" style="opacity:0.85">{% if IS_AR %}اعرض منتجاتك أمام المستثمرين{% else %}Showcase products to investors{% endif %}</p>
+                    <a href="{% url 'factory_request' %}" class="btn-gold text-decoration-none" style="padding:8px 20px; border-radius:8px; font-size:13px; display:inline-block;">
+                        {% if IS_AR %}اعرض مصنعك{% else %}List Factory{% endif %}
+                    </a>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="col-lg-9 col-md-8">
+
+                <!-- Results header -->
+                <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+                    <div>
+                        {% if query %}
+                        <h5 class="mb-1 fw-bold">
+                            {% if IS_AR %}نتائج البحث عن: "{{ query }}"{% else %}Search results for: "{{ query }}"{% endif %}
+                        </h5>
+                        {% elif selected_category %}
+                        <h5 class="mb-1 fw-bold">
+                            {% if IS_AR %}{{ selected_category.name_ar }}{% else %}{{ selected_category.name_en }}{% endif %}
+                        </h5>
+                        {% else %}
+                        <h5 class="mb-1 fw-bold">{% if IS_AR %}جميع الصادرات{% else %}All Exports{% endif %}</h5>
+                        {% endif %}
+                        <span class="text-muted small">
+                            {{ products.count }} {% if IS_AR %}منتج{% else %}product(s){% endif %}
+                        </span>
+                    </div>
+                    {% if query or selected_category %}
+                    <a href="{% url 'product_list' %}" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-times me-1"></i>
+                        {% if IS_AR %}مسح الفلتر{% else %}Clear Filter{% endif %}
+                    </a>
+                    {% endif %}
+                </div>
+
+                {% if products %}
+                <div class="row g-4">
+                    {% for product in products %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="product-card">
+                            <div class="product-img-wrap">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{% if IS_AR %}{{ product.name_ar }}{% else %}{{ product.name_en }}{% endif %}">
+                                {% else %}
+                                <div class="product-no-img"><i class="fas fa-box-open"></i></div>
+                                {% endif %}
+                                {% if product.is_featured %}
+                                <span class="product-badge"><i class="fas fa-star me-1"></i>{% if IS_AR %}مميز{% else %}Featured{% endif %}</span>
+                                {% endif %}
+                                <span class="availability-badge avail-{{ product.availability }}">
+                                    {% if IS_AR %}
+                                        {% if product.availability == 'available' %}متوفر{% elif product.availability == 'seasonal' %}موسمي{% else %}عند الطلب{% endif %}
+                                    {% else %}
+                                        {{ product.get_availability_display }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="product-body">
+                                {% if product.category %}
+                                <div class="product-cat">
+                                    <i class="{{ product.category.icon }}"></i>
+                                    {% if IS_AR %}{{ product.category.name_ar }}{% else %}{{ product.category.name_en }}{% endif %}
+                                </div>
+                                {% endif %}
+                                <h3 class="product-name">
+                                    {% if IS_AR %}{{ product.name_ar }}{% else %}{{ product.name_en }}{% endif %}
+                                </h3>
+                                <p class="product-desc">
+                                    {% if IS_AR %}{{ product.description_ar|truncatewords:12 }}{% else %}{{ product.description_en|truncatewords:12 }}{% endif %}
+                                </p>
+                                {% if product.price_min %}
+                                <div class="product-price">
+                                    ${{ product.price_min }}{% if product.price_max %} - ${{ product.price_max }}{% endif %}
+                                    <span class="currency">USD</span>
+                                </div>
+                                {% endif %}
+                                <div class="product-footer">
+                                    <a href="{% url 'product_detail' product.slug %}" class="btn-product-detail">
+                                        {% if IS_AR %}التفاصيل{% else %}Details{% endif %}
+                                    </a>
+                                    <a href="{% url 'product_detail' product.slug %}#inquiry" class="btn-inquiry-quick">
+                                        <i class="fas fa-envelope"></i>
+                                        {% if IS_AR %}استفسار{% else %}Inquiry{% endif %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <h4>{% if IS_AR %}لا توجد منتجات مطابقة{% else %}No matching products found{% endif %}</h4>
+                    <p class="text-muted">{% if IS_AR %}حاول بحثاً آخر أو تصفح جميع التصنيفات{% else %}Try a different search or browse all categories{% endif %}</p>
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-success mt-2">
+                        {% if IS_AR %}عرض الكل{% else %}View All{% endif %}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

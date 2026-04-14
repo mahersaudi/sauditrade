@@ -1,0 +1,397 @@
+{% extends 'exports/base.html' %}
+{% load static %}
+
+{% block title %}{% if IS_AR %}مجلس الصادرات والتجارة السعودية | الصفحة الرئيسية{% else %}Saudi Export & Trade Council | Home{% endif %}{% endblock %}
+
+{% block content %}
+
+<!-- ====== HERO SECTION ====== -->
+<section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 col-md-12">
+                <div class="hero-badge fade-in">
+                    <i class="fas fa-star"></i>
+                    {% if IS_AR %}المنصة الرسمية للصادرات السعودية{% else %}Official Saudi Exports Platform{% endif %}
+                </div>
+                <h1 class="hero-title fade-in">
+                    {% if IS_AR %}
+                        نربط المصانع السعودية
+                        <span>بالمستثمرين حول العالم</span>
+                    {% else %}
+                        Connecting Saudi Factories
+                        <span>With Global Investors</span>
+                    {% endif %}
+                </h1>
+                <p class="hero-desc fade-in">
+                    {% if IS_AR %}
+                        منصة وسيطة متخصصة تتيح للمستثمرين الأجانب البحث عن المنتجات والسلع السعودية،
+                        وللمصانع السعودية عرض منتجاتها للعالم.
+                    {% else %}
+                        A specialized intermediary platform that allows foreign investors to search for Saudi products,
+                        and Saudi factories to showcase their products to the world.
+                    {% endif %}
+                </p>
+                <div class="hero-btns fade-in">
+                    <a href="{% url 'product_list' %}" class="btn-hero-primary">
+                        <i class="fas fa-search me-2"></i>
+                        {% if IS_AR %}تصفح الصادرات{% else %}Browse Exports{% endif %}
+                    </a>
+                    <a href="{% url 'factory_request' %}" class="btn-hero-secondary">
+                        <i class="fas fa-industry me-2"></i>
+                        {% if IS_AR %}اعرض مصنعك{% else %}List Your Factory{% endif %}
+                    </a>
+                </div>
+                <div class="hero-stats fade-in">
+                    <div class="hero-stat">
+                        <span class="stat-num counter-num" data-target="{{ total_products|default:150 }}">{{ total_products|default:150 }}</span>
+                        <span class="stat-label">{% if IS_AR %}منتج مُدرج{% else %}Listed Products{% endif %}</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-num counter-num" data-target="{{ total_factories|default:60 }}">{{ total_factories|default:60 }}</span>
+                        <span class="stat-label">{% if IS_AR %}مصنع معتمد{% else %}Approved Factories{% endif %}</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-num counter-num" data-target="40">40</span>
+                        <span class="stat-label">{% if IS_AR %}دولة مصدَّر إليها{% else %}Export Countries{% endif %}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="hero-image-stack">
+                    <img src="{% static 'exports/img/robson-hatsukami-morgan-NKr0qBAkU4s-unsplash.jpg' %}" alt="Saudi Exports" class="hero-img-main">
+                    <div class="hero-img-card">
+                        <div class="card-icon"><i class="fas fa-handshake"></i></div>
+                        <div class="card-value">٢٠٢٥+</div>
+                        <div class="card-label">{% if IS_AR %}صفقة تجارية ناجحة{% else %}Successful Trade Deals{% endif %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== STATS BAR ====== -->
+<div class="stats-bar">
+    <div class="container">
+        <div class="row g-0 text-center">
+            <div class="col-6 col-md-3 stat-divider">
+                <div class="stat-item">
+                    <i class="fas fa-boxes s-icon d-block"></i>
+                    <span class="s-num counter-num" data-target="{{ total_products|default:150 }}">{{ total_products|default:150 }}</span>
+                    <span class="s-label">{% if IS_AR %}منتج متاح{% else %}Available Products{% endif %}</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 stat-divider">
+                <div class="stat-item">
+                    <i class="fas fa-industry s-icon d-block"></i>
+                    <span class="s-num counter-num" data-target="{{ total_factories|default:60 }}">{{ total_factories|default:60 }}</span>
+                    <span class="s-label">{% if IS_AR %}مصنع معتمد{% else %}Certified Factories{% endif %}</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 stat-divider">
+                <div class="stat-item">
+                    <i class="fas fa-globe s-icon d-block"></i>
+                    <span class="s-num counter-num" data-target="40">40</span>
+                    <span class="s-label">{% if IS_AR %}دولة نصدّر إليها{% else %}Export Countries{% endif %}</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-item">
+                    <i class="fas fa-users s-icon d-block"></i>
+                    <span class="s-num counter-num" data-target="500">500</span>
+                    <span class="s-label">{% if IS_AR %}مستثمر أجنبي{% else %}Foreign Investors{% endif %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== SEARCH SECTION ====== -->
+<section class="search-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h3 class="text-white text-center mb-4 fw-bold">
+                    {% if IS_AR %}🔍 ابحث عن المنتج الذي تحتاجه{% else %}🔍 Search for the Product You Need{% endif %}
+                </h3>
+                <form action="{% url 'product_list' %}" method="GET" id="searchForm">
+                    <div class="search-box">
+                        <i class="fas fa-search ms-3 text-muted"></i>
+                        <input type="text" name="q" placeholder="{% if IS_AR %}ابحث عن تمور، بتروكيماويات، بلاستيك، أثاث...{% else %}Search dates, petrochemicals, plastic, furniture...{% endif %}" autocomplete="off">
+                        <button type="submit">
+                            <i class="fas fa-search"></i>
+                            {% if IS_AR %}بحث{% else %}Search{% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== CATEGORIES ====== -->
+{% if categories %}
+<section class="categories-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-header text-center">
+                    <span class="section-tag">{% if IS_AR %}التصنيفات{% else %}Categories{% endif %}</span>
+                    <h2 class="section-title">
+                        {% if IS_AR %}تصفح حسب <span>القطاع</span>{% else %}Browse by <span>Sector</span>{% endif %}
+                    </h2>
+                    <div class="title-line mx-auto"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            {% for cat in categories %}
+            <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                <a href="{% url 'product_list' %}?category={{ cat.slug }}" class="category-card text-decoration-none">
+                    <div class="cat-icon">
+                        <i class="{{ cat.icon }}"></i>
+                    </div>
+                    <div class="cat-name">
+                        {% if IS_AR %}{{ cat.name_ar }}{% else %}{{ cat.name_en }}{% endif %}
+                    </div>
+                    <div class="cat-count">{{ cat.products.count }} {% if IS_AR %}منتج{% else %}products{% endif %}</div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ====== FEATURED PRODUCTS ====== -->
+{% if featured_products %}
+<section class="products-section">
+    <div class="container">
+        <div class="row align-items-end mb-4">
+            <div class="col-md-8">
+                <span class="section-tag">{% if IS_AR %}منتجات مميزة{% else %}Featured Products{% endif %}</span>
+                <h2 class="section-title">
+                    {% if IS_AR %}أبرز <span>الصادرات السعودية</span>{% else %}Top <span>Saudi Exports</span>{% endif %}
+                </h2>
+                <div class="title-line"></div>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="{% url 'product_list' %}" class="btn btn-outline-success fw-semibold">
+                    {% if IS_AR %}عرض الكل <i class="fas fa-arrow-left ms-1"></i>{% else %}View All <i class="fas fa-arrow-right ms-1"></i>{% endif %}
+                </a>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for product in featured_products %}
+            <div class="col-lg-4 col-md-6">
+                <div class="product-card">
+                    <div class="product-img-wrap">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{% if IS_AR %}{{ product.name_ar }}{% else %}{{ product.name_en }}{% endif %}">
+                        {% else %}
+                        <div class="product-no-img"><i class="fas fa-box-open"></i></div>
+                        {% endif %}
+                        <span class="product-badge">
+                            <i class="fas fa-star me-1"></i>{% if IS_AR %}مميز{% else %}Featured{% endif %}
+                        </span>
+                        <span class="availability-badge avail-{{ product.availability }}">
+                            {% if IS_AR %}
+                                {% if product.availability == 'available' %}متوفر{% elif product.availability == 'seasonal' %}موسمي{% else %}عند الطلب{% endif %}
+                            {% else %}
+                                {{ product.get_availability_display }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-cat">
+                            {% if product.category %}
+                            <i class="{{ product.category.icon }}"></i>
+                            {% if IS_AR %}{{ product.category.name_ar }}{% else %}{{ product.category.name_en }}{% endif %}
+                            {% endif %}
+                        </div>
+                        <h3 class="product-name">
+                            {% if IS_AR %}{{ product.name_ar }}{% else %}{{ product.name_en }}{% endif %}
+                        </h3>
+                        <p class="product-desc">
+                            {% if IS_AR %}{{ product.description_ar|truncatewords:15 }}{% else %}{{ product.description_en|truncatewords:15 }}{% endif %}
+                        </p>
+                        {% if product.price_min %}
+                        <div class="product-price">
+                            ${{ product.price_min }}{% if product.price_max %} - ${{ product.price_max }}{% endif %}
+                            <span class="currency">USD</span>
+                        </div>
+                        {% endif %}
+                        <div class="product-footer">
+                            <a href="{% url 'product_detail' product.slug %}" class="btn-product-detail">
+                                {% if IS_AR %}عرض التفاصيل{% else %}View Details{% endif %}
+                            </a>
+                            <a href="{% url 'product_detail' product.slug %}#inquiry" class="btn-inquiry-quick">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ====== HOW IT WORKS ====== -->
+<section class="how-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag">{% if IS_AR %}آلية العمل{% else %}How It Works{% endif %}</span>
+            <h2 class="section-title">
+                {% if IS_AR %}كيف <span>يعمل الموقع؟</span>{% else %}How Does <span>It Work?</span>{% endif %}
+            </h2>
+            <div class="title-line mx-auto"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-5">
+                <h4 class="text-center fw-bold mb-4" style="color:var(--green-dark)">
+                    {% if IS_AR %}
+                    <i class="fas fa-user-tie me-2"></i> للمستثمر الأجنبي
+                    {% else %}
+                    <i class="fas fa-user-tie me-2"></i> For Foreign Investors
+                    {% endif %}
+                </h4>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="how-card">
+                            <div class="how-num">1</div>
+                            <h5 class="how-title">{% if IS_AR %}تصفح أو ابحث{% else %}Browse or Search{% endif %}</h5>
+                            <p class="how-desc">{% if IS_AR %}تصفح قائمة المنتجات أو استخدم محرك البحث للعثور على السلعة التي تحتاجها{% else %}Browse the product list or use the search engine to find the commodity you need{% endif %}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="how-card">
+                            <div class="how-num">2</div>
+                            <h5 class="how-title">{% if IS_AR %}اختر المنتج{% else %}Select Product{% endif %}</h5>
+                            <p class="how-desc">{% if IS_AR %}اطلع على تفاصيل المنتج، المصنع، الأسعار والتوفر{% else %}View product details, factory info, prices and availability{% endif %}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="how-card">
+                            <div class="how-num">3</div>
+                            <h5 class="how-title">{% if IS_AR %}أرسل استفساراً{% else %}Send Inquiry{% endif %}</h5>
+                            <p class="how-desc">{% if IS_AR %}أرسل طلب الاستفسار الخاص بك وسيتواصل معك فريق المجلس{% else %}Send your inquiry and the council's team will contact you{% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <h4 class="text-center fw-bold mb-4" style="color:var(--gold-dark)">
+                    {% if IS_AR %}
+                    <i class="fas fa-industry me-2"></i> لأصحاب المصانع
+                    {% else %}
+                    <i class="fas fa-industry me-2"></i> For Factory Owners
+                    {% endif %}
+                </h4>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="how-card">
+                            <div class="how-num" style="background: linear-gradient(135deg, var(--gold-dark), var(--gold));">1</div>
+                            <h5 class="how-title">{% if IS_AR %}تقدم بطلب{% else %}Submit Request{% endif %}</h5>
+                            <p class="how-desc">{% if IS_AR %}أرسل طلب عرض مصنعك عبر نموذج التسجيل مع تفاصيل منتجاتك{% else %}Submit a factory listing request through the registration form with product details{% endif %}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="how-card">
+                            <div class="how-num" style="background: linear-gradient(135deg, var(--gold-dark), var(--gold));">2</div>
+                            <h5 class="how-title">{% if IS_AR %}مراجعة الطلب{% else %}Request Review{% endif %}</h5>
+                            <p class="how-desc">{% if IS_AR %}يقوم فريق المجلس بمراجعة طلبك والتحقق من المعلومات خلال 3-5 أيام{% else %}The council's team reviews your request and verifies information within 3-5 days{% endif %}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="how-card">
+                            <div class="how-num" style="background: linear-gradient(135deg, var(--gold-dark), var(--gold));">3</div>
+                            <h5 class="how-title">{% if IS_AR %}عرض المنتجات{% else %}Products Listed{% endif %}</h5>
+                            <p class="how-desc">{% if IS_AR %}بعد الموافقة، تُدرج منتجاتك وتصبح متاحة للمستثمرين الأجانب{% else %}After approval, your products are listed and become available to foreign investors{% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== CTA SECTION ====== -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-7">
+                <span class="section-tag" style="background:rgba(200,160,69,0.2); color:var(--gold-light); border-color:rgba(200,160,69,0.3);">
+                    {% if IS_AR %}انضم إلينا{% else %}Join Us{% endif %}
+                </span>
+                <h2 class="section-title" style="color:white">
+                    {% if IS_AR %}هل أنت <span style="color:var(--gold-light)">مستثمر أو صاحب مصنع؟</span>{% else %}Are You an <span style="color:var(--gold-light)">Investor or Factory Owner?</span>{% endif %}
+                </h2>
+                <p class="section-desc" style="color:rgba(255,255,255,0.75); margin:0 auto">
+                    {% if IS_AR %}انضم إلى منصة مجلس الصادرات والتجارة السعودية وافتح أبواباً جديدة للتجارة الدولية{% else %}Join the Saudi Export & Trade Council platform and open new doors for international trade{% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-5 col-md-6">
+                <div class="cta-card">
+                    <div class="cta-icon"><i class="fas fa-search-dollar"></i></div>
+                    <h4>{% if IS_AR %}للمستثمرين الأجانب{% else %}For Foreign Investors{% endif %}</h4>
+                    <p>{% if IS_AR %}ابحث عن المنتجات السعودية الأصيلة واتصل بالمصانع مباشرة عبر منصتنا الآمنة{% else %}Search for authentic Saudi products and connect with factories directly through our secure platform{% endif %}</p>
+                    <a href="{% url 'investor_inquiry' %}" class="btn-gold" style="display:inline-block; padding:12px 30px; border-radius:10px; text-decoration:none;">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        {% if IS_AR %}أرسل استفساراً{% else %}Send Inquiry{% endif %}
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6">
+                <div class="cta-card">
+                    <div class="cta-icon" style="background:linear-gradient(135deg,var(--green-mid),var(--green-dark))"><i class="fas fa-industry"></i></div>
+                    <h4>{% if IS_AR %}لأصحاب المصانع{% else %}For Factory Owners{% endif %}</h4>
+                    <p>{% if IS_AR %}اعرض منتجاتك أمام آلاف المستثمرين الأجانب ووسّع نطاق تصدير منتجاتك عالمياً{% else %}Showcase your products to thousands of foreign investors and expand your export reach globally{% endif %}</p>
+                    <a href="{% url 'factory_request' %}" class="btn-green" style="display:inline-block; padding:12px 30px; border-radius:10px; text-decoration:none;">
+                        <i class="fas fa-plus-circle me-2"></i>
+                        {% if IS_AR %}اعرض مصنعك{% else %}List Your Factory{% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== IMAGE GALLERY ====== -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-header text-center mb-4">
+            <span class="section-tag">{% if IS_AR %}معرض الصور{% else %}Gallery{% endif %}</span>
+            <h2 class="section-title">
+                {% if IS_AR %}من قلب <span>المملكة العربية السعودية</span>{% else %}From the Heart of <span>Saudi Arabia</span>{% endif %}
+            </h2>
+            <div class="title-line mx-auto"></div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-8">
+                <img src="{% static 'exports/img/esten-erbol-15JWmPetYeg-unsplash.jpg' %}" alt="Saudi" class="img-fluid rounded-4 shadow" style="height:320px; width:100%; object-fit:cover;">
+            </div>
+            <div class="col-md-4">
+                <div class="row g-3 h-100">
+                    <div class="col-12">
+                        <img src="{% static 'exports/img/maksym-kaharlytskyi-kDVaFjoQf4M-unsplash.jpg' %}" alt="Products" class="img-fluid rounded-4 shadow" style="height:150px; width:100%; object-fit:cover;">
+                    </div>
+                    <div class="col-12">
+                        <img src="{% static 'exports/img/bent-van-aeken-0A7YwYhZhWw-unsplash.jpg' %}" alt="Trade" class="img-fluid rounded-4 shadow" style="height:150px; width:100%; object-fit:cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

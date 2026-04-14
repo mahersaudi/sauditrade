@@ -1,0 +1,35 @@
+{% extends 'exports/base.html' %}
+{% load static %}
+
+{% block title %}{% if IS_AR %}تم إرسال الطلب بنجاح{% else %}Request Submitted Successfully{% endif %}{% endblock %}
+
+{% block content %}
+<section class="success-section">
+    <div class="container">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2>{% if IS_AR %}تم استلام طلبك بنجاح!{% else %}Request Received Successfully!{% endif %}</h2>
+            <p>
+                {% if IS_AR %}
+                شكراً لثقتك في مجلس الصادرات والتجارة السعودية. سيقوم فريقنا بمراجعة طلبك والتواصل معك خلال <strong>3-5 أيام عمل</strong>.
+                {% else %}
+                Thank you for trusting the Saudi Export & Trade Council. Our team will review your request and contact you within <strong>3-5 business days</strong>.
+                {% endif %}
+            </p>
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+                <a href="{% url 'home' %}" class="btn-green" style="padding:12px 28px; border-radius:10px; text-decoration:none;">
+                    <i class="fas fa-home me-2"></i>
+                    {% if IS_AR %}العودة للرئيسية{% else %}Back to Home{% endif %}
+                </a>
+                <a href="{% url 'product_list' %}" class="btn-outline-gold" style="padding:12px 28px; border-radius:10px; text-decoration:none;">
+                    <i class="fas fa-boxes me-2"></i>
+                    {% if IS_AR %}تصفح المنتجات{% else %}Browse Products{% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

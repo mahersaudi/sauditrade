@@ -1,0 +1,203 @@
+{% extends 'exports/base.html' %}
+{% load static %}
+
+{% block title %}{% if IS_AR %}{{ product.name_ar }}{% else %}{{ product.name_en }}{% endif %} | Saudi Export{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<div class="page-hero py-4">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">{% if IS_AR %}الرئيسية{% else %}Home{% endif %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'product_list' %}">{% if IS_AR %}الصادرات{% else %}Exports{% endif %}</a></li>
+                <li class="breadcrumb-item active">{% if IS_AR %}{{ product.name_ar|truncatechars:30 }}{% else %}{{ product.name_en|truncatechars:30 }}{% endif %}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Product Detail -->
+<section class="detail-section">
+    <div class="container">
+        <div class="row g-5">
+
+            <!-- Left: Product Info -->
+            <div class="col-lg-7">
+                <!-- Image -->
+                {% if product.image %}
+                <div class="detail-img-wrap mb-4">
+                    <img src="{{ product.image.url }}" alt="{% if IS_AR %}{{ product.name_ar }}{% else %}{{ product.name_en }}{% endif %}">
+                </div>
+                {% else %}
+                <div class="detail-no-img mb-4"><i class="fas fa-box-open"></i></div>
+                {% endif %}
+
+                <!-- Badges -->
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    {% if product.is_featured %}
+                    <span class="badge rounded-pill" style="background:var(--gold); font-size:13px; padding:7px 15px;">
+                        <i class="fas fa-star me-1"></i>{% if IS_AR %}منتج مميز{% else %}Featured Product{% endif %}
+                    </span>
+                    {% endif %}
+                    <span class="badge rounded-pill availability-badge avail-{{ product.availability }}" style="font-size:13px; padding:7px 15px; position:static;">
+                        {% if IS_AR %}
+                            {% if product.availability == 'available' %}✅ متوفر{% elif product.availability == 'seasonal' %}🌙 موسمي{% else %}📦 عند الطلب{% endif %}
+                        {% else %}
+                            {% if product.availability == 'available' %}✅ Available{% elif product.availability == 'seasonal' %}🌙 Seasonal{% else %}📦 On Order{% endif %}
+                        {% endif %}
+                    </span>
+                </div>
+
+                {% if product.category %}
+                <div class="product-cat mb-2" style="font-size:14px;">
+                    <i class="{{ product.category.icon }}"></i>
+                    {% if IS_AR %}{{ product.category.name_ar }}{% else %}{{ product.category.name_en }}{% endif %}
+                </div>
+                {% endif %}
+
+                <h1 class="fw-900 mb-3" style="font-size:clamp(1.6rem,3vw,2.2rem); color:var(--text-dark); font-weight:800;">
+                    {% if IS_AR %}{{ product.name_ar }}{% else %}{{ product.name_en }}{% endif %}
+                </h1>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <h5 class="fw-bold mb-2" style="color:var(--green-dark)">
+                        {% if IS_AR %}وصف المنتج{% else %}Product Description{% endif %}
+                    </h5>
+                    <p style="line-height:1.8; color:#444;">
+                        {% if IS_AR %}{{ product.description_ar }}{% else %}{{ product.description_en }}{% endif %}
+                    </p>
+                    {% if IS_AR and product.description_en %}
+                    <details class="mt-2">
+                        <summary style="cursor:pointer; color:var(--green-mid); font-weight:600; font-size:14px;">English Description</summary>
+                        <p class="mt-2" dir="ltr" style="line-height:1.8; color:#555; font-size:14px;">{{ product.description_en }}</p>
+                    </details>
+                    {% elif not IS_AR and product.description_ar %}
+                    <details class="mt-2">
+                        <summary style="cursor:pointer; color:var(--green-mid); font-weight:600; font-size:14px;">الوصف بالعربية</summary>
+                        <p class="mt-2" dir="rtl" style="line-height:1.8; color:#555; font-size:14px;">{{ product.description_ar }}</p>
+                    </details>
+                    {% endif %}
+                </div>
+
+                <!-- Meta Info -->
+                <div class="detail-meta">
+                    {% if product.price_min %}
+                    <div class="detail-meta-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div>
+                            <small class="d-block text-muted" style="font-size:11px;">{% if IS_AR %}نطاق السعر{% else %}Price Range{% endif %}</small>
+                            <strong>${{ product.price_min }}{% if product.price_max %} - ${{ product.price_max }}{% endif %} USD</strong>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if product.min_order_quantity %}
+                    <div class="detail-meta-item">
+                        <i class="fas fa-boxes"></i>
+                        <div>
+                            <small class="d-block text-muted" style="font-size:11px;">{% if IS_AR %}الحد الأدنى للطلب{% else %}Min. Order{% endif %}</small>
+                            <strong>{{ product.min_order_quantity }}</strong>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="detail-meta-item">
+                        <i class="fas fa-flag"></i>
+                        <div>
+                            <small class="d-block text-muted" style="font-size:11px;">{% if IS_AR %}المنشأ{% else %}Origin{% endif %}</small>
+                            <strong>{% if IS_AR %}المملكة العربية السعودية{% else %}Saudi Arabia{% endif %}</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factory Info -->
+                {% if product.factory %}
+                <div class="factory-card">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div style="width:50px; height:50px; background:linear-gradient(135deg,var(--green-dark),var(--green-mid)); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:20px; flex-shrink:0;">
+                            <i class="fas fa-industry"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">{% if IS_AR %}{{ product.factory.name_ar }}{% else %}{{ product.factory.name_en }}{% endif %}</h5>
+                            {% if product.factory.city %}
+                            <small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>{{ product.factory.city }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if product.factory.description_ar %}
+                    <p class="text-muted small mb-0">
+                        {% if IS_AR %}{{ product.factory.description_ar }}{% else %}{{ product.factory.description_en }}{% endif %}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Right: Inquiry Form -->
+            <div class="col-lg-5" id="inquiry">
+                <div class="inquiry-card">
+                    <div class="inquiry-card-header">
+                        <h4>
+                            <i class="fas fa-envelope-open-text me-2"></i>
+                            {% if IS_AR %}أرسل استفساراً{% else %}Send Inquiry{% endif %}
+                        </h4>
+                        <p>{% if IS_AR %}تواصل معنا وسنربطك بالمصنع المناسب{% else %}Contact us and we'll connect you with the right factory{% endif %}</p>
+                    </div>
+                    <div class="inquiry-card-body">
+                        <form method="POST" action="#inquiry">
+                            {% csrf_token %}
+                            {% for field in inquiry_form %}
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                <div class="invalid-feedback d-block">{{ field.errors.as_text }}</div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn-green w-100 py-3" style="font-size:15px;">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                {% if IS_AR %}إرسال الاستفسار{% else %}Send Inquiry{% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        {% if related_products %}
+        <div class="mt-6 pt-5 border-top" style="margin-top:60px">
+            <h3 class="fw-bold mb-4">
+                {% if IS_AR %}منتجات مشابهة{% else %}Related Products{% endif %}
+            </h3>
+            <div class="row g-4">
+                {% for rp in related_products %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <div class="product-img-wrap">
+                            {% if rp.image %}<img src="{{ rp.image.url }}" alt="{{ rp.name_ar }}">
+                            {% else %}<div class="product-no-img"><i class="fas fa-box-open"></i></div>{% endif %}
+                        </div>
+                        <div class="product-body">
+                            <h4 class="product-name" style="font-size:15px;">
+                                {% if IS_AR %}{{ rp.name_ar }}{% else %}{{ rp.name_en }}{% endif %}
+                            </h4>
+                            <div class="product-footer">
+                                <a href="{% url 'product_detail' rp.slug %}" class="btn-product-detail">
+                                    {% if IS_AR %}التفاصيل{% else %}Details{% endif %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
